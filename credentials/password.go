@@ -24,3 +24,7 @@ func (provider *passwordProvider) Retrieve() (io.Reader, error) {
 func (provider *passwordProvider) URL() string {
 	return provider.creds.URL
 }
+
+func (provider *passwordProvider) AccessToken() string {
+	return ""
+}

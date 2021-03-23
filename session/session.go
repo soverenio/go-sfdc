@@ -71,6 +71,20 @@ func Open(config sfdc.Configuration) (*Session, error) {
 	if config.Version <= 0 {
 		return nil, errors.New("session: configuration version can not be less than zero")
 	}
+
+	accessToken := config.Credentials.AccessToken()
+	if len(accessToken) != 0 {
+		session := &Session{
+			response: &sessionPasswordResponse{
+				AccessToken: accessToken,
+				InstanceURL: config.Credentials.URL(),
+				TokenType:   "Bearer",
+			},
+			config: config,
+		}
+		return session, nil
+	}
+
 	request, err := passwordSessionRequest(config.Credentials)
 
 	if err != nil {
