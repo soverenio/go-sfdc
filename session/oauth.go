@@ -17,7 +17,7 @@ func (s *OAuthSession) InstanceURL() string {
 }
 
 func (s *OAuthSession) AuthorizationHeader(request *http.Request) {
-	auth := fmt.Sprintf("OAuth %s", s.AccessToken)
+	auth := fmt.Sprintf("Bearer %s", s.AccessToken)
 	request.Header.Add("Authorization", auth)
 }
 
