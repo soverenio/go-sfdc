@@ -12,7 +12,7 @@ import (
 )
 
 // Session is the authentication response.  This is used to generate the
-// authroization header for the Salesforce API calls.
+// authorization header for the Salesforce API calls.
 type Session struct {
 	response *sessionPasswordResponse
 	config   sfdc.Configuration
@@ -131,7 +131,7 @@ func passwordSessionResponse(request *http.Request, client *http.Client) (*sessi
 	return &sessionResponse, nil
 }
 
-// InstanceURL will retuern the Salesforce instance
+// InstanceURL will return the Salesforce instance
 // from the session authentication.
 func (session *Session) InstanceURL() string {
 	return session.response.InstanceURL
