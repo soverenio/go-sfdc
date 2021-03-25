@@ -7,12 +7,12 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/g8rswimmer/go-sfdc"
-	"github.com/g8rswimmer/go-sfdc/credentials"
+	"github.com/soverenio/go-sfdc"
+	"github.com/soverenio/go-sfdc/credentials"
 )
 
 // Session is the authentication response.  This is used to generate the
-// authroization header for the Salesforce API calls.
+// authorization header for the Salesforce API calls.
 type Session struct {
 	response *sessionPasswordResponse
 	config   sfdc.Configuration
@@ -71,6 +71,20 @@ func Open(config sfdc.Configuration) (*Session, error) {
 	if config.Version <= 0 {
 		return nil, errors.New("session: configuration version can not be less than zero")
 	}
+
+	accessToken := config.Credentials.AccessToken()
+	if len(accessToken) != 0 {
+		session := &Session{
+			response: &sessionPasswordResponse{
+				AccessToken: accessToken,
+				InstanceURL: config.Credentials.URL(),
+				TokenType:   "Bearer",
+			},
+			config: config,
+		}
+		return session, nil
+	}
+
 	request, err := passwordSessionRequest(config.Credentials)
 
 	if err != nil {
@@ -131,7 +145,7 @@ func passwordSessionResponse(request *http.Request, client *http.Client) (*sessi
 	return &sessionResponse, nil
 }
 
-// InstanceURL will retuern the Salesforce instance
+// InstanceURL will return the Salesforce instance
 // from the session authentication.
 func (session *Session) InstanceURL() string {
 	return session.response.InstanceURL

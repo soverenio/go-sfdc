@@ -7,8 +7,8 @@ import (
 	"net/http"
 	"strconv"
 
-	sfdc "github.com/g8rswimmer/go-sfdc"
-	"github.com/g8rswimmer/go-sfdc/session"
+	sfdc "github.com/soverenio/go-sfdc"
+	"github.com/soverenio/go-sfdc/session"
 )
 
 // Parameters to query all of the bulk jobs.
